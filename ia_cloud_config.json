@@ -1,0 +1,61 @@
+
+{
+	"iaCloudConfig":{
+		"userID": "HackathonTest",
+		"password": "UgtH0-YUekd(",
+		"FDSKey": "com.atbridge-cnsltg.raspberrypi-1",
+		"FDSType": "iaCloudFDS",
+		"comment": "ia-cloud sample implementation for RaspberryPi",
+		"requestUrl": "https://r9431tn90a.execute-api.us-east-1.amazonaws.com/hackathon/api/iaCloud/rev06",
+		"options": {
+			"logName": "iaCloudTestApp",
+			"httpTimeout":[10,30],
+			"httpRetry": 2,
+			"proxies": {"https": "http://example:8080"},
+			"timezone":"JST",
+			"debug": true,
+			"periodicObjects": ["dataObject_CPUTemp"]
+		}
+	},
+	"dataObject_CPUTemp": {
+		"objectKey": "com.atbridge-cnsltg.raspberrypi-1.CPUInfo",
+		"objectType": "iaCloudObject",
+		"objectDescription": "RaspberryPi CPU情報",
+		"timeStamp": null,
+		"options":{
+			"period": 30,
+			"source": "CPU_info"
+			},
+		"ObjectContent": {
+			"contentType": "iaCloudData",
+			"contentData": [{
+				"dataName": "CPU温度",
+				"dataValue": null,
+				"unit": "°C",
+				"options": {
+					"source":"cat /sys/class/thermal/thermal_zone0/temp",
+					"gain": 0.001,
+					"offset": 0
+				}
+			},{
+				"dataName": "CPU使用率",
+				"dataValue": null,
+				"unit": "%",
+				"options": {
+					"source":"vmstat | tail -1 | awk '{print $15}'",
+					"gain": -1,
+					"offset": 100
+				}
+			},{
+				"dataName": "空きメモリ量",
+				"dataValue": null,
+				"unit": "MB",
+				"options": {
+					"source":"vmstat | tail -1 | awk '{print $4}'",
+					"gain": 0.001,
+					"offset": 0
+				}
+			}]
+		}
+	}
+}

@@ -1,0 +1,155 @@
+{
+	"userAppConfig":{
+		"aplicationName": "SampleApp",
+		"GPIOConfig": {
+			"GPIOInputPins": [33, 36, 37, 40],
+			"GPIOOutputPins": [35, 38],
+			"toggleInterval": 19,
+			"eventWatchCh": 40
+		}
+	},
+	"iaCloudConfig":{
+		"userID": "HackathonTest",
+		"password": "UgtH0-YUekd(",
+		"FDSKey": "com.atbridge-cnsltg.raspberrypi-1",
+		"FDSType": "iaCloudFDS",
+		"comment": "ia-cloud Sample Application for RaspberryPi",
+		"requestUrl": "https://r9431tn90a.execute-api.us-east-1.amazonaws.com/hackathon/api/iaCloud/rev06",
+		"options": {
+			"logName": "iaCloud",
+			"httpTimeout": [10,30],
+			"httpRetry": 2,
+			"proxies": null,
+			"timezone":"JST",
+			"errorValue": null,
+			"debug": false,
+			"periodicObjects": ["CPU_info", "GPIO_inputs"],
+			"asyncObjects": ["GPIO_40_on", "GPIO_40_off"]
+		}
+	},
+	"CPU_info": {
+		"objectKey": "com.atbridge-cnsltg.raspberrypi-1.CPUInfo",
+		"objectType": "iaCloudObject",
+		"objectDescription": "RaspberryPi CPU情報",
+		"timeStamp": null,
+		"options":{
+			"period": 300,
+			"source": "CPU_info"
+		},
+		"ObjectContent": {
+			"contentType": "iaCloudData",
+			"contentData": [{
+				"dataName": "CPU温度",
+				"dataValue": null,
+				"unit": "°C",
+				"options": {
+					"source":"cat /sys/class/thermal/thermal_zone0/temp",
+					"gain": 0.001,
+					"offset": 0
+				}
+			},{
+			"dataName": "CPU使用率",
+			"dataValue": null,
+			"unit": "%",
+			"options": {
+				"source":"vmstat | tail -1 | awk '{print $15}'",
+				"gain": -1,
+				"offset": 100
+				}
+			},{
+			"dataName": "空きメモリ量",
+			"dataValue": null,
+			"unit": "MB",
+			"options": {
+				"source":"vmstat | tail -1 | awk '{print $4}'",
+				"gain": 0.001,
+				"offset": 0
+				}
+			}]
+		}
+	},
+	"GPIO_inputs": {
+		"objectKey": "com.atbridge-cnsltg.raspberrypi-1.gpio-test-s",
+		"objectType": "iaCloudObject",
+		"objectDescription": "RaspberryPi GPIO Test Object for (CH33,36,37,40)",
+		"timeStamp": null,
+		"options":{
+			"period": 60,
+			"source": "GPIO.BOARD"
+		},
+		"ObjectContent": {
+				"contentType": "iaCloudData",
+				"contentData": [{
+				"dataName": "DI-1",
+				"dataValue": null,
+				"options": {
+					"source": "33",
+					"logic": "NEGATIVE"
+				}
+			},{
+				"dataName": "DI-2",
+				"dataValue": null,
+				"options": {
+					"source": "36",
+					"logic": "NEGATIVE"
+				}
+			},{
+				"dataName": "DI-3",
+				"dataValue": null,
+				"options": {
+					"source": "37",
+					"logic": "NEGATIVE"
+				}
+			},{
+				"dataName": "DI-4",
+				"dataValue": null,
+				"options": {
+					"source": "40",
+					"logic": "NEGATIVE"
+				}
+			}]
+		}
+	},
+	"GPIO_40_on": {
+		"objectKey": "com.atbridge-cnsltg.raspberrypi-1.gpio-test-s",
+		"objectType": "iaCloudObject",
+		"objectDescription": "RaspberryPi GPIO event_detect Object for CH40 ON",
+		"timeStamp": null,
+		"options":{
+			"period": 0,
+			"source": "GPIO.BOARD"
+		},
+		"ObjectContent": {
+			"contentType": "iaCloudData",
+			"contentData": [{
+				"dataName": "DI-4",
+				"dataValue": true,
+				"options": {
+					"source": "40",
+					"logic": "NEGATIVE"
+				}
+			}]
+		}
+	},
+	"GPIO_40_off": {
+		"objectKey": "com.atbridge-cnsltg.raspberrypi-1.gpio-test-s",
+		"objectType": "iaCloudObject",
+		"objectDescription": "RaspberryPi GPIO event_detect Object for CH40 OFF",
+		"timeStamp": null,
+		"options":{
+			"period": 0,
+			"source": "GPIO.BOARD"
+		},
+		"ObjectContent": {
+			"contentType": "iaCloudData",
+			"contentData": [{
+				"dataName": "DI-4",
+				"dataValue": false,
+				"options": {
+					"source": "40",
+					"logic": "NEGATIVE"
+				}
+			}]
+		}
+	}
+}
